@@ -24,6 +24,13 @@ func getIndex(arr []int, n int) int {
 }
 
 var parsedModel map[string]string
+// The MODEL simply maps patterns to characters
+// e.g. MLQQLQMLQMLQM -> v
+// M,L,Q refer to path commands in SVG graphics
+// https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path
+// they specify where and how to draw lines and curves
+// Each character has a unique pattern, which is why we can
+// break the captcha this way
 
 func SolveCaptcha(svgCaptcha string) string {
 	if parsedModel == nil {
