@@ -3,10 +3,14 @@ package main
 import (
 	"feastogether/client"
 	"feastogether/config"
+	"fmt"
 	"log"
+	"os"
 )
 
-func main() {
+const runSolver = true
+
+func saveSeat() {
 	// 讀取 config
 	cfg, err := config.GetConfig("./")
 	if err != nil {
@@ -34,4 +38,18 @@ func main() {
 		return
 	}
 	log.Println("訂位已送出，請盡速付訂金。")
+}
+
+func main() {
+	if runSolver {
+		svgData, err := os.ReadFile("svg-response.json")
+		if err != nil {
+			panic(err)
+		}
+		code, ans := client.SolverTest(svgData)
+		fmt.Printf("code = %v\n", code)
+		fmt.Printf("ans = %v\n", ans)
+	} else {
+		saveSeat()
+	}
 }

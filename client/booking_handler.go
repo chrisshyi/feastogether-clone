@@ -236,3 +236,27 @@ func SaveBooking(act string, token string, payload config.RestaurantConfig) bool
 	}
 	return true
 }
+
+func SolverTest(input []byte) (string, string) {
+	var data Response
+	if err := json.Unmarshal(input, &data); err != nil {
+		log.Printf("Failed to decode response body: %v\n", err)
+		return "", ""
+	}
+
+	if data.StatusCode != 1000 {
+		log.Println(data.Result.Msg)
+		return "", ""
+	}
+
+	if data.Result.Svg == "" {
+		return "", "" // No Captcha is needed
+	}
+
+	ans := captchasolver.SolveCaptcha(data.Result.Svg)
+	if ans == "" {
+		log.Println("Solver Failed.")
+		return "", ""
+	}
+	return data.Result.Code, ans
+}
