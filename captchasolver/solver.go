@@ -31,6 +31,8 @@ var parsedModel map[string]string
 // they specify where and how to draw lines and curves
 // Each character has a unique pattern, which is why we can
 // break the captcha this way
+// this post explains how that's done in detail
+// https://dev.to/sushrut111/decode-captcha-created-by-library-svg-captcha-5d36
 
 func SolveCaptcha(svgCaptcha string) string {
 	if parsedModel == nil {
